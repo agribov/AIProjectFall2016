@@ -1,3 +1,13 @@
+"""
+Artificial Intelligence Fall 2016
+Final Project: NeverRed
+
+Authors: Alex Gribov and Donovyn Pickler
+
+Note: We based this off of the "runner.py" file fom SUMO's
+TraCi TLS tutorial, and so we left the original header below
+"""
+
 #!/usr/bin/env python
 """
 @file    runner.py
