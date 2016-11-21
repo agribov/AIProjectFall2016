@@ -1,0 +1,7 @@
+
+
+Runner.py generates the route file, which includes the route types, vehicle types,
+	and all the vehicles for for a given simulation.  Running the simulation with a
+	given route file will produce the same results each time.
+
+One timestep is equivilant to one simulated second.
