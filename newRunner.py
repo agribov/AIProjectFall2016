@@ -110,6 +110,11 @@ def run():
     traci.trafficlights.setPhase("0", 2)
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
+
+        numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_1i")
+        halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_1i")
+        print (numCars, halting)
+        
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
@@ -119,8 +124,6 @@ def run():
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
 
-            numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_1i")
-            print numCars
         step += 1
     traci.close()
     sys.stdout.flush()
