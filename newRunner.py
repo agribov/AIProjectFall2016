@@ -111,10 +111,16 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
 
-        numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_1i")
-        halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_1i")
+        # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
+
+        numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_2i")
+        halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_2i")
+        vehicleList = traci.multientryexit.getLastStepVehicleIDs("e3_0_2i")
         print (numCars, halting)
-        
+
+        for vehicle in vehicleList:
+            print traci.vehicle.getLanePosition(vehicle)
+
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
