@@ -103,16 +103,24 @@ def generate_routefile():
 #    </tlLogic>
 
 
+"""
+PHASES:
+1 - 
+2 - EW Green
+3 - NW Green
+4 - 
+""" 
+
 def run():
     """execute the TraCI control loop"""
     traci.init(PORT)
-    state = basics.TrafficState(traci)
     step = 0
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
     while traci.simulation.getMinExpectedNumber() > 0:
+        #state.traci().simulationStep()
         traci.simulationStep()
-
+        state = basics.TrafficState(traci)
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
         numCars = state.getNumCars(1)

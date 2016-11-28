@@ -8,8 +8,11 @@ File: learningAgents.py
 This file is entirely the work of the authors
 """
 
-class ReflexAgent(TrafficAgent):
+#class ReflexAgent(TrafficAgent):
 
-    def getAction(self, trafficState)
+#    def getAction(self, trafficState)
         
+    
+def evaluationFunction(state) :
+    value = 0
     
