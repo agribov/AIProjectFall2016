@@ -114,16 +114,15 @@ def run():
 
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
-        #numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_2i")
-        #halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_2i")
-        #vehicleList = traci.multientryexit.getLastStepVehicleIDs("e3_0_2i")
-        #print (numCars, halting)
-
         state = basics.TrafficState(traci)
-        print state.getCarsInLane(1)
-        
-        #for vehicle in vehicleList:
-        #    print traci.vehicle.getLanePosition(vehicle)
+
+        numCars = state.getNumCars(1)
+        halting = state.getNumHalted(1)
+        vehicleList = state.getVehicleList(1)
+        print (numCars, halting)
+
+        for vehicle in vehicleList:
+            print traci.vehicle.getLanePosition(vehicle)
 
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
