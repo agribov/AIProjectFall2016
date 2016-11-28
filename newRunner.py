@@ -106,6 +106,7 @@ def generate_routefile():
 def run():
     """execute the TraCI control loop"""
     traci.init(PORT)
+    state = basics.TrafficState(traci)
     step = 0
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
@@ -113,8 +114,6 @@ def run():
         traci.simulationStep()
 
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
-
-        state = basics.TrafficState(traci)
 
         numCars = state.getNumCars(1)
         halting = state.getNumHalted(1)
