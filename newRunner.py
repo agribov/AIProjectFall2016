@@ -31,6 +31,7 @@ import optparse
 import subprocess
 import random
 import basics
+import learningAgents
 
 """
 sys.path.append(os.path.join(os.path.dirname(
@@ -111,9 +112,7 @@ def run():
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
     while traci.simulation.getMinExpectedNumber() > 0:
-        traci.simulationStep()
-
-
+        traci.simulationStep()        
 
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
@@ -122,11 +121,14 @@ def run():
         numCars = state.getNumCars(1)
         halting = state.getNumHalted(1)
         vehicleList = state.getVehicleList(1)
-        print (numCars, halting)
+        #print (numCars, halting)
 
-        for vehicle in vehicleList:
-            print traci.vehicle.getLanePosition(vehicle)
+        #for vehicle in vehicleList:
+        #    print traci.vehicle.getLanePosition(vehicle)
 
+        val = learningAgents.evaluationFunction(state, 5)
+        #print val
+        
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
