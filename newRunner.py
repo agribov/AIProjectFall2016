@@ -1,7 +1,9 @@
 """
 Artificial Intelligence Fall 2016
 Final Project: NeverRed
+
 Authors: Alex Gribov and Donovyn Pickler
+
 Note: We based this off of the "runner.py" file fom SUMO's
 TraCi TLS tutorial, and so we left the original header below
 """
@@ -15,9 +17,12 @@ TraCi TLS tutorial, and so we left the original header below
 @author  Jakob Erdmann
 @date    2009-03-26
 @version $Id: runner.py 19535 2015-12-05 13:47:18Z behrisch $
+
 Tutorial for traffic light control via the TraCI interface.
+
 SUMO, Simulation of Urban MObility; see http://sumo.dlr.de/
 Copyright (C) 2009-2015 DLR/TS, Germany
+
 This file is part of SUMO.
 SUMO is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,6 +36,7 @@ import optparse
 import subprocess
 import random
 import basics
+import learningAgents
 
 """
 sys.path.append(os.path.join(os.path.dirname(
@@ -65,6 +71,7 @@ def generate_routefile():
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
         <vType id="typeNS" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
+
         <route id="right" edges="51o 1i 2o 52i" />
         <route id="left" edges="52o 2i 1o 51i" />
         <route id="down" edges="54o 4i 3o 53i" />
@@ -110,6 +117,8 @@ def run():
     step = 0
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
+
+    phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
 
@@ -127,6 +136,22 @@ def run():
         for vehicle in vehicleList:
             print traci.vehicle.getLanePosition(vehicle)
 
+        
+        if learningAgents.evaluationFunction(state, phaseTimer) < 0:
+            # Weighted score is less than 0, time to switch.
+            if basics.getLightState == 2:
+                #Is currently green for East to West, set green for North to South
+                traci.trafficlights.setPhase("0", 3)
+            if basics.getLightState == 3:
+                #Is currently green for North to South, set green for East to West
+                traci.trafficlights.setPhase("0", 2)
+            phaseTimer = 0 #Restart the phase timer now that the phase is changed.
+        else:
+            phaseTimer += 1
+
+        
+        
+        """
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
@@ -135,7 +160,9 @@ def run():
             else:
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
+        """
 
+        
         step += 1
     traci.close()
     sys.stdout.flush()
