@@ -35,3 +35,12 @@ class TrafficState:
 
     def getVehicleList(self, laneNum):
         return self.vehicles[laneNum-1]
+
+    def getLightState(self):
+        return self.traciData.trafficlights.getPhase("0")
+
+    def setLightState(self, nextState):
+        return 0
+    
+    def traci(self):
+        return self.traciData
