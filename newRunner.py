@@ -35,6 +35,7 @@ import sys
 import optparse
 import subprocess
 import random
+import basics
 
 """
 sys.path.append(os.path.join(os.path.dirname(
@@ -113,13 +114,16 @@ def run():
 
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
-        numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_2i")
-        halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_2i")
-        vehicleList = traci.multientryexit.getLastStepVehicleIDs("e3_0_2i")
-        print (numCars, halting)
+        #numCars = traci.multientryexit.getLastStepVehicleNumber("e3_0_2i")
+        #halting = traci.multientryexit.getLastStepHaltingNumber("e3_0_2i")
+        #vehicleList = traci.multientryexit.getLastStepVehicleIDs("e3_0_2i")
+        #print (numCars, halting)
 
-        for vehicle in vehicleList:
-            print traci.vehicle.getLanePosition(vehicle)
+        state = basics.TrafficState(traci)
+        print state.getCarsInLane(1)
+        
+        #for vehicle in vehicleList:
+        #    print traci.vehicle.getLanePosition(vehicle)
 
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching

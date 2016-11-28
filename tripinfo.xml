@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Sun 27 Nov 2016 05:56:28 PM EST by SUMO gui Version 0.25.0
+<!-- generated on Sun 27 Nov 2016 08:30:29 PM EST by SUMO gui Version 0.25.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumo-gui.exeConfiguration.xsd">
@@ -37,4 +37,7 @@
 -->
 
 <tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="left_0" depart="0.00" departLane="52o_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="91.00" arrivalLane="51i_0" arrivalPos="10.00" arrivalSpeed="11.53" duration="91.00" routeLength="1015.10" waitSteps="0" timeLoss="15.11" rerouteNo="0" devices="tripinfo_left_0" vType="typeWE" vaporized=""/>
+    <tripinfo id="right_2" depart="3.00" departLane="51o_0" departPos="5.10" departSpeed="0.00" departDelay="0.00" arrival="94.00" arrivalLane="52i_0" arrivalPos="10.00" arrivalSpeed="11.48" duration="91.00" routeLength="1015.10" waitSteps="0" timeLoss="14.46" rerouteNo="0" devices="tripinfo_right_2" vType="typeWE" vaporized=""/>
+    <tripinfo id="left_1" depart="5.00" departLane="52o_0" departPos="5.10" departSpeed="0.00" departDelay="3.00" arrival="96.00" arrivalLane="51i_0" arrivalPos="10.00" arrivalSpeed="11.26" duration="91.00" routeLength="1015.10" waitSteps="0" timeLoss="14.86" rerouteNo="0" devices="tripinfo_left_1" vType="typeWE" vaporized=""/>
 </tripinfos>
