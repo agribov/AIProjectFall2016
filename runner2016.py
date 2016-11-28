@@ -28,7 +28,8 @@ import optparse
 import subprocess
 import random
 
-# we need to import python modules from the $SUMO_HOME/tools directory
+# we need to import python modules from the $SUMO_HOME/tools
+
 try:
     sys.path.append(os.path.join(os.path.dirname(
         __file__), '..', '..', '..', '..', "tools"))  # tutorial in tests
@@ -55,7 +56,7 @@ def generate_routefile():
     pWE = 1. / 10
     pEW = 1. / 10 
     pNS = 1. / 10
-	pSN = 1. / 10
+    pSN = 1. / 10
     with open("data/cross.rou.xml", "w") as routes:
         print("""<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
@@ -65,7 +66,7 @@ def generate_routefile():
         <route id="left" edges="52o 2i 1o 51i" />
         <route id="down" edges="54o 4i 3o 53i" />
 		<route id="up" edges="53o 3i 4o 54i" />""", file=routes)
-		"""
+	"""
 		---------- Edit 11/19/2016 ----------
 		Node Diagram!!
 		
@@ -96,7 +97,7 @@ def generate_routefile():
 		
 		
 		
-		"""
+	"""
         lastVeh = 0
         vehNr = 0
         for i in range(N):  #Generate cars and their destinations for each time step.
@@ -115,7 +116,7 @@ def generate_routefile():
                     vehNr, i), file=routes)
                 vehNr += 1
                 lastVeh = i
-			if random.uniform(0, 1) < pSN:
+	    if random.uniform(0, 1) < pSN:
                 print('    <vehicle id="down_%i" type="typeNS" route="down" depart="%i" color="1,0,0"/>' % (
                     vehNr, i), file=routes)
                 vehNr += 1
