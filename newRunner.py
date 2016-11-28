@@ -1,9 +1,7 @@
 """
 Artificial Intelligence Fall 2016
 Final Project: NeverRed
-
 Authors: Alex Gribov and Donovyn Pickler
-
 Note: We based this off of the "runner.py" file fom SUMO's
 TraCi TLS tutorial, and so we left the original header below
 """
@@ -17,12 +15,9 @@ TraCi TLS tutorial, and so we left the original header below
 @author  Jakob Erdmann
 @date    2009-03-26
 @version $Id: runner.py 19535 2015-12-05 13:47:18Z behrisch $
-
 Tutorial for traffic light control via the TraCI interface.
-
 SUMO, Simulation of Urban MObility; see http://sumo.dlr.de/
 Copyright (C) 2009-2015 DLR/TS, Germany
-
 This file is part of SUMO.
 SUMO is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -70,7 +65,6 @@ def generate_routefile():
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
         <vType id="typeNS" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
-
         <route id="right" edges="51o 1i 2o 52i" />
         <route id="left" edges="52o 2i 1o 51i" />
         <route id="down" edges="54o 4i 3o 53i" />
