@@ -63,16 +63,18 @@ def generate_routefile():
     N = 3600  # number of time steps
     # demand per second from different directions
     pWE = 1. / 10
-    pEW = 1. / 11
-    pNS = 1. / 30
+    pEW = 1. / 10
+    pNS = 1. / 10
+    pSN = 1. / 10
     with open("data/cross.rou.xml", "w") as routes:
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
-        <vType id="typeNS" accel="0.8" decel="4.5" sigma="0.5" length="7" minGap="3" maxSpeed="25" guiShape="bus"/>
+        <vType id="typeNS" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
 
         <route id="right" edges="51o 1i 2o 52i" />
         <route id="left" edges="52o 2i 1o 51i" />
-        <route id="down" edges="54o 4i 3o 53i" />"""
+        <route id="down" edges="54o 4i 3o 53i" />
+        <route id="up" edges="53o 3i 4o 54i" />"""
         lastVeh = 0
         vehNr = 0
         for i in range(N):
@@ -87,7 +89,12 @@ def generate_routefile():
                 vehNr += 1
                 lastVeh = i
             if random.uniform(0, 1) < pNS:
-                print >> routes, '    <vehicle id="down_%i" type="typeNS" route="down" depart="%i" color="1,0,0"/>' % (
+                print >> routes, '    <vehicle id="down_%i" type="typeNS" route="down" depart="%i" />' % (
+                    vehNr, i)
+                vehNr += 1
+                lastVeh = i
+            if random.uniform(0, 1) < pSN:
+                print >> routes, '    <vehicle id="up_%i" type="typeNS" route="up" depart="%i" />' % (
                     vehNr, i)
                 vehNr += 1
                 lastVeh = i
