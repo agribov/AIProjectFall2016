@@ -1,7 +1,9 @@
 """
 Artificial Intelligence Fall 2016
 Final Project: NeverRed
+
 Authors: Alex Gribov and Donovyn Pickler
+
 Note: We based this off of the "runner.py" file fom SUMO's
 TraCi TLS tutorial, and so we left the original header below
 """
@@ -15,9 +17,12 @@ TraCi TLS tutorial, and so we left the original header below
 @author  Jakob Erdmann
 @date    2009-03-26
 @version $Id: runner.py 19535 2015-12-05 13:47:18Z behrisch $
+
 Tutorial for traffic light control via the TraCI interface.
+
 SUMO, Simulation of Urban MObility; see http://sumo.dlr.de/
 Copyright (C) 2009-2015 DLR/TS, Germany
+
 This file is part of SUMO.
 SUMO is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,16 +61,18 @@ PORT = 8873
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 3600  # number of time steps
+    N = 86400  # number of time steps, one tick is one second.
+    # 12/1/2016 Number of time steps taken chosen to represent one day.
     # demand per second from different directions
-    pWE = 1. / 10
-    pEW = 1. / 10
-    pNS = 1. / 10
-    pSN = 1. / 10
+    pWE = 1. / 10 #travel from a suburb into a city
+    pEW = 1. / 10 #travel from a city into a suburb
+    pNS = 1. / 10 #Uniform NS traffic the entire time
+    pSN = 1. / 10 #Uniform SN traffic the entire time
     with open("data/cross.rou.xml", "w") as routes:
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
         <vType id="typeNS" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
+
         <route id="right" edges="51o 1i 2o 52i" />
         <route id="left" edges="52o 2i 1o 51i" />
         <route id="down" edges="54o 4i 3o 53i" />
@@ -93,6 +100,23 @@ def generate_routefile():
                     vehNr, i)
                 vehNr += 1
                 lastVeh = i
+
+            """
+
+
+
+            """
+            
+            #if Timesteps within morning rush hour
+                # increase west to east traffic rate as we enter rush hour
+                # decrease west to east traffic as we leave rush hour and the day progresses
+
+            #if timesteps within afternoon rush hour
+                #increase east to west traffic as we enter rush hour
+                # decrease east to west traffic as we leave rush hour and the night progresses
+
+            #leave north to south / south to north traffic constant for the whole experiment.
+            
         print >> routes, "</routes>"
 
 # The program looks like this
@@ -111,6 +135,8 @@ def run():
     step = 0
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
+
+    phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()        
 
@@ -126,12 +152,39 @@ def run():
         #for vehicle in vehicleList:
         #    print traci.vehicle.getLanePosition(vehicle)
 
+        """
+        #Reflex agent hard code.
+        if learningAgents.evaluationFunction(state, phaseTimer) < 0:
+            # Weighted score is less than 0, time to switch.
+            if basics.getLightState == 2:
+                #Is currently green for East to West, set green for North to South
+                traci.trafficlights.setPhase("0", 3)
+            if basics.getLightState == 3:
+                #Is currently green for North to South, set green for East to West
+                traci.trafficlights.setPhase("0", 2)
+            phaseTimer = 0 #Restart the phase timer now that the phase is changed.
+        else:
+            phaseTimer += 1
+        """
+
+        
+        #Q-learning agent.
+
+        
+        """
+=======
         val = learningAgents.evaluationFunction(state, 5)
         #print val
+<<<<<<< HEAD
+        
+>>>>>>> refs/remotes/origin/master
+        if traci.trafficlights.getPhase("0") == 2:
+=======
 
         #newPhase = learningAgents.chooseActionReflex(state, 0)
         #traci.trafficlights.setPhase("0", newPhase)
         if learningAgents.switchPhaseReflex(state, 0):
+>>>>>>> refs/remotes/origin/alex3
             # we are not already switching
             #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
             if traci.trafficlights.getPhase("0") == 2:
@@ -140,7 +193,10 @@ def run():
             else:
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
+        """
 
+<<<<<<< HEAD
+=======
                 """
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
@@ -152,6 +208,7 @@ def run():
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
         """
+>>>>>>> refs/remotes/origin/alex3
         
         step += 1
     traci.close()
