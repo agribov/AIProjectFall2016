@@ -180,11 +180,12 @@ def run():
 >>>>>>> refs/remotes/origin/master
         if traci.trafficlights.getPhase("0") == 2:
 =======
+        """
 
+        
         #newPhase = learningAgents.chooseActionReflex(state, 0)
         #traci.trafficlights.setPhase("0", newPhase)
         if learningAgents.switchPhaseReflex(state, 0):
->>>>>>> refs/remotes/origin/alex3
             # we are not already switching
             #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
             if traci.trafficlights.getPhase("0") == 2:
@@ -193,11 +194,9 @@ def run():
             else:
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
-        """
+        
 
-<<<<<<< HEAD
-=======
-                """
+        """
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
@@ -208,8 +207,7 @@ def run():
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
         """
->>>>>>> refs/remotes/origin/alex3
-        
+
         step += 1
     traci.close()
     sys.stdout.flush()
