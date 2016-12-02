@@ -34,8 +34,8 @@ class TrafficState:
         return self.traciData.multientryexit.getLastStepVehicleNumber(numToLane(laneNum))
 
     def getVehicleList(self, laneNum):
-        print laneNum
-        print self.vehicles
+        #print laneNum
+        #print self.vehicles
         return self.vehicles[laneNum-1]
 
     def getLightState(self):
