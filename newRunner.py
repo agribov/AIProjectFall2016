@@ -61,12 +61,13 @@ PORT = 8873
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 3600  # number of time steps
+    N = 86400  # number of time steps, one tick is one second.
+    # 12/1/2016 Number of time steps taken chosen to represent one day.
     # demand per second from different directions
-    pWE = 1. / 10
-    pEW = 1. / 10
-    pNS = 1. / 10
-    pSN = 1. / 10
+    pWE = 1. / 10 #travel from a suburb into a city
+    pEW = 1. / 10 #travel from a city into a suburb
+    pNS = 1. / 10 #Uniform NS traffic the entire time
+    pSN = 1. / 10 #Uniform SN traffic the entire time
     with open("data/cross.rou.xml", "w") as routes:
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
@@ -99,6 +100,23 @@ def generate_routefile():
                     vehNr, i)
                 vehNr += 1
                 lastVeh = i
+
+            """
+
+
+
+            """
+            
+            #if Timesteps within morning rush hour
+                # increase west to east traffic rate as we enter rush hour
+                # decrease west to east traffic as we leave rush hour and the day progresses
+
+            #if timesteps within afternoon rush hour
+                #increase east to west traffic as we enter rush hour
+                # decrease east to west traffic as we leave rush hour and the night progresses
+
+            #leave north to south / south to north traffic constant for the whole experiment.
+            
         print >> routes, "</routes>"
 
 # The program looks like this
@@ -134,8 +152,8 @@ def run():
         #for vehicle in vehicleList:
         #    print traci.vehicle.getLanePosition(vehicle)
 
-<<<<<<< HEAD
-        
+        """
+        #Reflex agent hard code.
         if learningAgents.evaluationFunction(state, phaseTimer) < 0:
             # Weighted score is less than 0, time to switch.
             if basics.getLightState == 2:
@@ -147,8 +165,11 @@ def run():
             phaseTimer = 0 #Restart the phase timer now that the phase is changed.
         else:
             phaseTimer += 1
+        """
 
         
+        #Q-learning agent.
+
         
         """
 =======

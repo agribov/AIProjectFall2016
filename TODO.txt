@@ -1,0 +1,39 @@
+TODO by Sunday Dec 4th:
+
+Break points:
+	-Figure out how to put break points in the simulation.
+	-Determine where we want out break points are.
+	-Have it output useful data at each break point.
+	
+	
+Belief System:
+	-Index states by time stamp
+	-States are to have a value based on the number of waiting cars in each lane
+		-These values would inform the decision to change the light phase and give priority to certain lanes based on time of day.
+		
+
+Display data:
+	-Show a live count of average wait time for cars at the intersection
+		-Possibly by lane.
+	-Make the data generated at the break points look pretty.
+
+
+Car Distribution:
+	-Modify the number of cars going in a direction based on the time stamp include "rush hours"
+	
+	
+(Optional) Modularity:
+	-Make the number of cars that the sensors can pick up alterable with an argument passed to the simulation on launch
+	-Make the simulation length dynamic based on an argument passed to the simulation on launch
+	
+
+
+(Optional) Other agents:
+	-Do some other kinds of agents so we can compare their data with our agent.
+		-Realistically this isn't happening and would require more than one intersection.
+		
+		
+
+TODO by Sunday Dec 11th:
+
+read and do this: http://www.cs.uml.edu/ecg/index.php/AIfall16/FPPaper
