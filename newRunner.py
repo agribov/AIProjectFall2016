@@ -120,9 +120,7 @@ def run():
 
     phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
-        traci.simulationStep()
-
-
+        traci.simulationStep()        
 
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
@@ -131,11 +129,12 @@ def run():
         numCars = state.getNumCars(1)
         halting = state.getNumHalted(1)
         vehicleList = state.getVehicleList(1)
-        print (numCars, halting)
+        #print (numCars, halting)
 
-        for vehicle in vehicleList:
-            print traci.vehicle.getLanePosition(vehicle)
+        #for vehicle in vehicleList:
+        #    print traci.vehicle.getLanePosition(vehicle)
 
+<<<<<<< HEAD
         
         if learningAgents.evaluationFunction(state, phaseTimer) < 0:
             # Weighted score is less than 0, time to switch.
@@ -152,6 +151,11 @@ def run():
         
         
         """
+=======
+        val = learningAgents.evaluationFunction(state, 5)
+        #print val
+        
+>>>>>>> refs/remotes/origin/master
         if traci.trafficlights.getPhase("0") == 2:
             # we are not already switching
             if traci.inductionloop.getLastStepVehicleNumber("0") > 0:

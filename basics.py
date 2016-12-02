@@ -24,7 +24,7 @@ class TrafficState:
         self.traciData = traciObj
         self.numLanes = n
         self.vehicles = []
-        for i in range(1,n):
+        for i in range(1,n+1):
             self.vehicles.append(self.traciData.multientryexit.getLastStepVehicleIDs(numToLane(i)))
 
     def getNumHalted(self, laneNum):
@@ -34,6 +34,8 @@ class TrafficState:
         return self.traciData.multientryexit.getLastStepVehicleNumber(numToLane(laneNum))
 
     def getVehicleList(self, laneNum):
+        print laneNum
+        print self.vehicles
         return self.vehicles[laneNum-1]
 
     def getLightState(self):
