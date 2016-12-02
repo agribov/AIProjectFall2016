@@ -3,6 +3,7 @@ TODO by Sunday Dec 4th:
 Break points:
 	-Figure out how to put break points in the simulation.
 	-Determine where we want out break points are.
+	   - One "day" into the sim, then after learning
 	-Have it output useful data at each break point.
 	
 	
