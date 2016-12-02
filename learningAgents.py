@@ -24,7 +24,9 @@ def evaluationFunction(state, phaseTime) :
     
     PHASE_TIME_VAL = 1
     GREEN_NUM_CARS_VAL = 1
+    RED_NUM_CARS_VAL = 1
     GREEN_DIST_VAL = 1
+    RED_DIST_VAL = 1
     
     value = 0
     phase = state.traci().trafficlights.getPhase("0")
@@ -44,5 +46,11 @@ def evaluationFunction(state, phaseTime) :
         for vehicle in state.getVehicleList(lane):
             dist = 500 - state.traci().vehicle.getLanePosition(vehicle)
             value += dist * GREEN_DIST_VAL
-        
+
+    for lane in redLanes:
+        value -= state.getNumCars(lane) * RED_NUM_CARS_VAL
+        for vehicle in state.getVehicleList(lane):
+            dist = 500 - state.traci().vehicle.getLanePosition(vehicle)
+            value -= (100 - dist) * RED_DIST_VAL
+     
     return value
