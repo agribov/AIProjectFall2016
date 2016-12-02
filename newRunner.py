@@ -139,7 +139,7 @@ def run():
     #phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()        
-
+        step += 1
         # Functions from http://sumo.dlr.de/daily/pydoc/traci.html
 
         state = basics.TrafficState(traci)
@@ -161,7 +161,7 @@ def run():
                 traci.trafficlights.setPhase("0", 3)
             if basics.getLightState == 3:
                 #Is currently green for North to South, set green for East to West
-                traci.trafficlights.setPhase("0", 2)
+               traci.trafficlights.setPhase("0", 2)
             phaseTimer = 0 #Restart the phase timer now that the phase is changed.
         else:
             phaseTimer += 1
@@ -185,15 +185,18 @@ def run():
         
         #newPhase = learningAgents.chooseActionReflex(state, 0)
         #traci.trafficlights.setPhase("0", newPhase)
-        if learningAgents.switchPhaseReflex(state, 0):
-            # we are not already switching
-            #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
-            if traci.trafficlights.getPhase("0") == 2:
-                # there is a vehicle from the north, switch
-                traci.trafficlights.setPhase("0", 3)
-            else:
-                # otherwise try to keep green for EW
-                traci.trafficlights.setPhase("0", 2)
+        if step >= 32:
+            step = 0
+            print "Stepped"
+            if learningAgents.switchPhaseReflex(state, 0):
+                # we are not already switching
+                #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
+                if traci.trafficlights.getPhase("0") == 2:
+                    # there is a vehicle from the north, switch
+                    traci.trafficlights.setPhase("0", 3)
+                else:
+                    # otherwise try to keep green for EW
+                    traci.trafficlights.setPhase("0", 2)
         
 
         """
