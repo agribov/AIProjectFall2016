@@ -136,7 +136,7 @@ def run():
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
 
-    phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
+    #phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()        
 
