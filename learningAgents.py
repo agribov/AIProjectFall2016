@@ -18,12 +18,20 @@ Phase 2 is EW Green
 Phase 3 is NS Green
 """
 
+def switchPhaseReflex(state, phaseTime) :
+    eval = evaluationFunction(state, phaseTime)
+    #currPhase = state.traci().trafficlights.getPhase("0")
+    #print currPhase
+    
+    if eval > 0: return False
+    else: return True
+
 def evaluationFunction(state, phaseTime) :
     # returns a value -- If the value is negative, switch phase,
     # else, keep the phase
     
     PHASE_TIME_VAL = 1
-    GREEN_NUM_CARS_VAL = 1
+    GREEN_NUM_CARS_VAL = 15
     RED_NUM_CARS_VAL = 1
     GREEN_DIST_VAL = 1
     RED_DIST_VAL = 1

@@ -128,16 +128,31 @@ def run():
 
         val = learningAgents.evaluationFunction(state, 5)
         #print val
-        
-        if traci.trafficlights.getPhase("0") == 2:
+
+        #newPhase = learningAgents.chooseActionReflex(state, 0)
+        #traci.trafficlights.setPhase("0", newPhase)
+        if learningAgents.switchPhaseReflex(state, 0):
             # we are not already switching
-            if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
+            #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
+            if traci.trafficlights.getPhase("0") == 2:
                 # there is a vehicle from the north, switch
                 traci.trafficlights.setPhase("0", 3)
             else:
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
 
+                """
+        if traci.trafficlights.getPhase("0") == 2:
+            # we are not already switching
+            #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:
+            if learningAgents.switchPhaseReflex(state, 0):
+                # there is a vehicle from the north, switch
+                traci.trafficlights.setPhase("0", 3)
+            else:
+                # otherwise try to keep green for EW
+                traci.trafficlights.setPhase("0", 2)
+        """
+        
         step += 1
     traci.close()
     sys.stdout.flush()
