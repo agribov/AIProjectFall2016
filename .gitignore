@@ -2,3 +2,12 @@ data/cross.out
 data/e3output.xml
 data/cross.out
 data/e3output.xml
+tripinfo.xml
+*.xml
+*.pyc
+*.out
+*.out
+util.pyc
+*.xml
+data/e3output.xml
+util.pyc
