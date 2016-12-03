@@ -20,3 +20,14 @@ def raiseNotDefined():
 
 def numToLane(n):
     return {1:"e3_0_1i", 2:"e3_0_2i", 3:"e3_0_3i", 4:"e3_0_4i"}[n]
+
+def getTime(n):
+    #1 day = 86400 time steps
+    day = n / 86400
+    #1 hour = 3600 time steps
+    hour = (n - (day * 86400)) / 3600
+    #1 minute = 60 time steps
+    minute = (n - (day * 86400)- (hour * 3600)) / 60
+    #1 second = 1 time step
+    second = (n - (day * 86400)- (hour * 3600) - (minute * 60))
+    return [day, hour, minute, second]

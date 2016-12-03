@@ -19,7 +19,7 @@ Display data:
 	-Make the data generated at the break points look pretty.
 
 
-Car Distribution:
+Car Distribution: (DONE, may need tweaking.)
 	-Modify the number of cars going in a direction based on the time stamp include "rush hours"
 	
 	
