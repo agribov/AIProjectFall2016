@@ -9,6 +9,7 @@ This file is entirely the work of the authors
 """
 
 import sys
+import traci
 
 def raiseNotDefined():
     fileName = inspect.stack()[1][1]
@@ -31,3 +32,10 @@ def getTime(n):
     #1 second = 1 time step
     second = (n - (day * 86400)- (hour * 3600) - (minute * 60))
     return [day, hour, minute, second]
+
+
+def getWaitTimes(n):
+    time = getTime(n)
+    print "day: " + time[0] + "  " + time[1] + ':' + time[2] + ':' + time[3]
+    
+    

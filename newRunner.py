@@ -66,11 +66,13 @@ def generate_routefile():
     # 12/2/2016 Number of time steps taken chosen to represent eight days.
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
+    trafficBase = .05
+
     # demand per second from different directions
-    pWE = .1 #travel from a suburb into a city
-    pEW = .1 #travel from a city into a suburb
-    pNS = .07 #Uniform NS traffic the entire time
-    pSN = .07 #Uniform SN traffic the entire time
+    pWE = trafficBase #travel from a suburb into a city
+    pEW = trafficBase #travel from a city into a suburb
+    pNS = trafficBase * .7 #Uniform NS traffic the entire time
+    pSN = trafficBase * .7 #Uniform SN traffic the entire time
 
     time = 0
 
@@ -132,8 +134,8 @@ def generate_routefile():
                     
             #Resetting the traffic values to prevent weird things happening with floats.
             if time[1] == 0 & time[2] == 0 & time[3] == 0:
-                pWE = .1
-                pEW = .1
+                pWE = trafficBase
+                pEW = trafficBase
             
             
 
