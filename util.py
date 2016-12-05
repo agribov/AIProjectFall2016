@@ -33,9 +33,17 @@ def getTime(n):
     second = (n - (day * 86400)- (hour * 3600) - (minute * 60))
     return [day, hour, minute, second]
 
+#takes the wait times for the four lanes and writes it to an output file.
+def stringWaitTimes(rawTime, lane1,lane2,lane3,lane4):
+    time = getTime(rawTime)
+    laneWE = lane1
+    laneEW = lane2
+    laneNS = lane3
+    laneSN = lane4
+    meanTime = (lane1 + lane2 + lane3 + lane4) / 4
+    returnable = ["day:" , time[0] , "Time:" , time[1] , ":" , time[2] , ":" , time[3] , "laneWE:" , laneWE , "laneEW:" , laneEW , "laneNS:" , laneNS , "laneSN:" , laneSN , "meanTime:" , meanTime]
+    return returnable
+    
+    
+    
 
-def getWaitTimes(n):
-    time = getTime(n)
-    print "day: " + time[0] + "  " + time[1] + ':' + time[2] + ':' + time[3]
-    
-    
