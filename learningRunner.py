@@ -71,7 +71,7 @@ def generate_routefile():
 
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
-    trafficBase = .05
+    trafficBase = .15
 
     # demand per second from different directions
     pWE = trafficBase #travel from a suburb into a city
