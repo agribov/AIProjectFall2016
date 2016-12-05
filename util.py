@@ -9,7 +9,7 @@ This file is entirely the work of the authors
 """
 
 import sys
-import traci
+#import traci
 
 def raiseNotDefined():
     fileName = inspect.stack()[1][1]

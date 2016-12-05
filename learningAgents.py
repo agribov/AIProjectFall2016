@@ -78,17 +78,20 @@ class LearningAgent:
         self.DISCOUNT = discount
 
         self.belief = []
+        self.updateCounter = []
         for i in range(1440):
             #for j in range(1, 4):
             #laneList = [0.25, 0.25, 0.25, 0.25, 0.25]
             self.belief.insert(i, list((0.25, 0.25, 0.25, 0.25, 0.25)))
-    
+            self.updateCounter.insert(i, 1)
+            
     def switchPhase(self, state, time, phaseTime) :
         
         minute = (time % 86400) / 60
-        print(self.belief[minute])
+        print(["Update #", self.updateCounter[minute]])
+        print("Belief: ", self.belief[minute])
 
-        self.updateBelief(state, minute)
+        self.updateBelief2(state, minute)
         value = self.evaluationFunction(state, minute, phaseTime)
         
         if value > 0: return False
@@ -110,9 +113,50 @@ class LearningAgent:
         # Normalize the four lanes in relation to each other
         for lane in lanes:
             self.belief[minute][lane] /= totalBelief
-            
+
         return 0
 
+    def updateBelief2(self, state, minute) :
+        NEW_VAL = 1
+    
+        totalBelief = 0;
+        totalTemp = 0;
+        lanes = [1, 2, 3, 4]
+        tempBelief = [0, 0, 0, 0, 0,]
+
+        # Calculate new beliefs based on values
+        for lane in lanes:
+            """
+            newBelief = self.belief[minute][lane] * self.DISCOUNT
+            newBelief *= (state.getNumCars(lane) + 1) * NEW_VAL
+            self.belief[minute][lane] = newBelief
+            totalBelief += newBelief
+            """
+            tempBelief[lane] = (state.getNumCars(lane) + 1) * NEW_VAL
+            totalTemp += tempBelief[lane]
+            
+        print ("Current layout: ", tempBelief)
+            
+        # Normalize the four lanes in relation to each other
+        for lane in lanes:
+            #print(tempBelief[lane], totalTemp)
+            tempBelief[lane] = float(tempBelief[lane]) / totalTemp
+            #self.belief[minute][lane] /= totalBelief
+            print(self.updateCounter[minute])
+            tempBelief[lane] += self.belief[minute][lane] * self.updateCounter[minute]
+            #print(tempBelief[lane])
+            totalBelief += tempBelief[lane]
+
+        print ("New Temp: ", tempBelief)
+            
+        for lane in lanes:
+            self.belief[minute][lane] = tempBelief[lane] / totalBelief
+
+        print ("New Belief: ", self.belief[minute])
+            
+        self.updateCounter[minute] += 1
+        return 0
+    
     def evaluationFunction(self, state, minute, phaseTime) :
     # returns a value -- If the value is negative, switch phase,
     # else, keep the phase
