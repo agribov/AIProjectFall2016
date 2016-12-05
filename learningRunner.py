@@ -65,12 +65,13 @@ def generate_routefile():
     random.seed(42)  # make tests reproducible
     #N = 86400  #One Day
     #N = 172800 #Two Days
-    N = 691200 #Eight Days
+    #N = 691200 #Eight Days
+    N = 2592000 #Thirty Days 
     # number of time steps, one tick is one second.
 
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
-    trafficBase = .08
+    trafficBase = .05
 
     # demand per second from different directions
     pWE = trafficBase #travel from a suburb into a city
@@ -193,7 +194,7 @@ def run():
         #traci.trafficlights.setPhase("0", newPhase)
         if step >= 32:
             step = 0
-            print "Stepped"
+            #print "Stepped"
             if evaluator.switchPhase(state, timeCount, 0):
                 # we are not already switching
                 #if traci.inductionloop.getLastStepVehicleNumber("0") > 0:

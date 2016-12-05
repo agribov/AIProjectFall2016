@@ -69,7 +69,7 @@ def evaluationFunction(state, phaseTime) :
             dist = 500 - state.traci().vehicle.getLanePosition(vehicle)
             value -= (100 - dist) * RED_DIST_VAL
 
-    print value
+    #print value
     return value
 
 
@@ -88,8 +88,8 @@ class LearningAgent:
     def switchPhase(self, state, time, phaseTime) :
         
         minute = (time % 86400) / 60
-        print(["Update #", self.updateCounter[minute]])
-        print("Belief: ", self.belief[minute])
+        #print(["Update #", self.updateCounter[minute]])
+        #print("Belief: ", self.belief[minute])
 
         self.updateBelief2(state, minute)
         value = self.evaluationFunction(state, minute, phaseTime)
@@ -135,7 +135,7 @@ class LearningAgent:
             tempBelief[lane] = (state.getNumCars(lane) + 1) * NEW_VAL
             totalTemp += tempBelief[lane]
             
-        print ("Current layout: ", tempBelief)
+        #print ("Current layout: ", tempBelief)
             
         # Normalize the four lanes in relation to each other
         for lane in lanes:
@@ -147,12 +147,12 @@ class LearningAgent:
             #print(tempBelief[lane])
             totalBelief += tempBelief[lane]
 
-        print ("New Temp: ", tempBelief)
+        #print ("New Temp: ", tempBelief)
             
         for lane in lanes:
             self.belief[minute][lane] = tempBelief[lane] / totalBelief
 
-        print ("New Belief: ", self.belief[minute])
+        #print ("New Belief: ", self.belief[minute])
             
         self.updateCounter[minute] += 1
         return 0
