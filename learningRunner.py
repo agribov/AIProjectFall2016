@@ -63,12 +63,14 @@ PORT = 8873
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    #N = 86400
-    N = 691200 # number of time steps, one tick is one second.
-    # 12/2/2016 Number of time steps taken chosen to represent eight days.
+    #N = 86400  #One Day
+    #N = 172800 #Two Days
+    N = 691200 #Eight Days
+    # number of time steps, one tick is one second.
+
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
-    trafficBase = .05
+    trafficBase = .08
 
     # demand per second from different directions
     pWE = trafficBase #travel from a suburb into a city
@@ -152,6 +154,7 @@ def run():
     traci.init(PORT)
     step = 0
     timeCount = 0
+    rushHour = 1
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
     evaluator = learningAgents.LearningAgent()
@@ -172,6 +175,8 @@ def run():
     laneEW = 0
     laneSN = 0
     laneNS = 0
+
+    
 
     
     
@@ -202,12 +207,15 @@ def run():
         
         
         time = util.getTime(timeCount)
+
+        if time[1] == 7 and time[2] == 0 and time[3] == 0:
+            rushHour = 1
         
         if time[1] >= 7 and time [1] < 9:
-            laneWE = ((laneWE * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/timeCount
-            laneEW = ((laneEW * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('2i_0'))/timeCount
-            laneSN = ((laneSN * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('3i_0'))/timeCount
-            laneNS = ((laneNS * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/timeCount
+            laneWE = ((laneWE * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/rushHour
+            laneEW = ((laneEW * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('2i_0'))/rushHour
+            laneSN = ((laneSN * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('3i_0'))/rushHour
+            laneNS = ((laneNS * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/rushHour
         
         
         if time[1] == 9 and time[2] == 0 and time[3] == 0:
@@ -218,14 +226,17 @@ def run():
             laneSN = 0
             laneNS = 0
 
+        if time[1] == 17 and time[2] == 0 and time[3] == 0:
+            rushHour = 1
+
         if time[1] >= 17 and time [1] < 19:
-            laneWE = ((laneWE * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/timeCount
-            laneEW = ((laneEW * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('2i_0'))/timeCount
-            laneSN = ((laneSN * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('3i_0'))/timeCount
-            laneNS = ((laneNS * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/timeCount
+            laneWE = ((laneWE * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/rushHour
+            laneEW = ((laneEW * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('2i_0'))/rushHour
+            laneSN = ((laneSN * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('3i_0'))/rushHour
+            laneNS = ((laneNS * (rushHour-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/rushHour
         
         
-        if time[1] == 9 and time[2] == 0 and time[3] == 0:
+        if time[1] == 19 and time[2] == 0 and time[3] == 0:
             outFile.write(str(util.stringWaitTimes(timeCount, laneWE, laneEW, laneSN, laneNS)))
             outFile.write('\n')
             laneWE = 0
@@ -257,7 +268,7 @@ def run():
                 # otherwise try to keep green for EW
                 traci.trafficlights.setPhase("0", 2)
         """
-
+        rushHour += 1
         step += 1
     outFile.close()
     traci.close()
