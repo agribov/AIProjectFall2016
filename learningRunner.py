@@ -37,6 +37,7 @@ import subprocess
 import random
 import basics
 import learningAgents
+import util
 
 """
 sys.path.append(os.path.join(os.path.dirname(
@@ -61,13 +62,20 @@ PORT = 8873
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 86400  # number of time steps, one tick is one second.
-    # 12/1/2016 Number of time steps taken chosen to represent one day.
+    N = 691200 # number of time steps, one tick is one second.
+    # 12/2/2016 Number of time steps taken chosen to represent eight days.
+    #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
+
+    trafficBase = .05
+
     # demand per second from different directions
-    pWE = 1. / 10 #travel from a suburb into a city
-    pEW = 1. / 10 #travel from a city into a suburb
-    pNS = 1. / 10 #Uniform NS traffic the entire time
-    pSN = 1. / 10 #Uniform SN traffic the entire time
+    pWE = trafficBase #travel from a suburb into a city
+    pEW = trafficBase #travel from a city into a suburb
+    pNS = trafficBase * .7 #Uniform NS traffic the entire time
+    pSN = trafficBase * .7 #Uniform SN traffic the entire time
+
+    time = 0
+    
     with open("data/cross.rou.xml", "w") as routes:
         print >> routes, """<routes>
         <vType id="typeWE" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="16.67" guiShape="passenger"/>
@@ -101,20 +109,28 @@ def generate_routefile():
                 vehNr += 1
                 lastVeh = i
 
-            """
-
-
-
-            """
+            time = util.getTime(i)
             
-            #if Timesteps within morning rush hour
-                # increase west to east traffic rate as we enter rush hour
-                # decrease west to east traffic as we leave rush hour and the day progresses
+            #Morning rush hour defined as starting around 7am and continuing until 9am, peaking at 8am, gradual increase and decrease.
+            #Set to alter the value every minute
+            if time[1] < 9 & time[1] > 7 & time[3] == 0:  
+                if time[1] < 8:
+                    pWE += .005
+                else:
+                    pWE -= .005
 
-            #if timesteps within afternoon rush hour
-                #increase east to west traffic as we enter rush hour
-                # decrease east to west traffic as we leave rush hour and the night progresses
-
+            #Afternoon rush hour defined as starting at 5pm and going until 7pm, sharp increase with slow taper.
+            #Set to alter the value every minute
+            if time[1] > 17 & time[1] < 19 & time[3] == 0:
+                if time[1] == 5 & time[2] < 15:
+                    pEW += .02
+                else:
+                    pEw -= .00125
+                    
+            #Resetting the traffic values to prevent weird things happening with floats.
+            if time[1] == 0 & time[2] == 0 & time[3] == 0:
+                pWE = trafficBase
+                pEW = trafficBase
             #leave north to south / south to north traffic constant for the whole experiment.
             
         print >> routes, "</routes>"
