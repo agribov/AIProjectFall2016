@@ -38,6 +38,7 @@ import random
 import basics
 import learningAgents
 import util
+from datetime import datetime
 
 """
 sys.path.append(os.path.join(os.path.dirname(
@@ -62,7 +63,8 @@ PORT = 8873
 
 def generate_routefile():
     random.seed(42)  # make tests reproducible
-    N = 691200 # number of time steps, one tick is one second.
+    N = 86400
+    #N = 691200 # number of time steps, one tick is one second.
     # 12/2/2016 Number of time steps taken chosen to represent eight days.
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
@@ -125,7 +127,7 @@ def generate_routefile():
                 if time[1] == 5 & time[2] < 15:
                     pEW += .02
                 else:
-                    pEw -= .00125
+                    pEW -= .00125
                     
             #Resetting the traffic values to prevent weird things happening with floats.
             if time[1] == 0 & time[2] == 0 & time[3] == 0:
@@ -153,6 +155,25 @@ def run():
     # we start with phase 2 where EW has green
     traci.trafficlights.setPhase("0", 2)
     evaluator = learningAgents.LearningAgent()
+
+    
+    #opening an output file.
+    fileName = "Output.txt"
+    outFile = open(fileName, 'w')
+
+    """
+    Lane IDs:
+    West to East: 1i_0
+    East to West: 2i_0
+    South to North: 3i_0
+    North to South: 4i_0
+    """
+    laneWE = 0
+    laneEW = 0
+    laneSN = 0
+    laneNS = 0
+
+    
     
     #phaseTimer # = 0 # Counts how many time steps have occured since the last phase change
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -178,6 +199,33 @@ def run():
                     # otherwise try to keep green for EW
                     traci.trafficlights.setPhase("0", 2)
         
+        
+        
+        time = util.getTime(timeCount)
+        
+        if time[1] >= 7 and time [1] < 9:
+            laneWE = ((laneWE * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/timeCount
+            laneEW = ((laneEW * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('2i_0'))/timeCount
+            laneSN = ((laneSN * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('3i_0'))/timeCount
+            laneNS = ((laneNS * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/timeCount
+        
+        
+        if time[1] == 9 and time[2] == 0 and time[3] == 0:
+            outFile.write(str(util.stringWaitTimes(timeCount, laneWE, laneEW, laneSN, laneNS)))
+            outFile.write('\n')
+        
+        """
+        #getting a wait time string
+        if timeCount%60 == 0:
+            #print util.getTime(timeCount)
+            #print laneWE
+            #print laneEW
+            #print laneSN
+            #print laneNS
+            
+            #outFile.write(util.stringWaitTimes(timeCount, laneWE, laneEW, laneSN, laneNS))
+            
+        """
 
         """
         if traci.trafficlights.getPhase("0") == 2:
@@ -192,6 +240,7 @@ def run():
         """
 
         step += 1
+    outFile.close()
     traci.close()
     sys.stdout.flush()
 
