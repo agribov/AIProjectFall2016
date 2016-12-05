@@ -16,17 +16,25 @@ runner(old).py     - Main executable. Loads in nets, nodes, and additional files
 	      	it generating a random binomial distribution in both x and y.
 
 		Originally created by SUMO team, though we are using it as a
-		base for our main code.
+		base for our main code. _DELETED_
 
 newRunner.py  - Same file, but was used for Alex to expirement and debug while
 	      	creating sensors. Currently, running this file is the same as
 		runner.py, except that it will place a MEME sensor in each lane
 		and print the number of cars in the left sensor to the shell.
+		
 
 Runner2016.py - More recent version of the file, edited by Donovyn to alter the
 		vehicle types that will be used and what paths they will take.
 		This and newRunner.py will be merged and conflicts between the
 		two will be handled in the not too distant future.
+		_DELETED_
+
+TODO.txt - Simple todo file reminding us of things that needed to be done, not super needed anymore.
+
+Output.txt - Output of the average speed across all lanes at the end of each rush hour cycle.
+
+README.md - a readme we never filled out.
 
 Useful information.txt
 		- A place for note-taking. Not much in there because we forgot
