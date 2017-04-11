@@ -64,7 +64,9 @@ PORT = 8873
 def generate_routefile():
     random.seed(42)  # make tests reproducible
     #N = 86400
-    N = 691200 # number of time steps, one tick is one second.
+    #N = 691200 # number of time steps, one tick is one second.
+    #N = 2246400 #26 days
+    N = 172800 #2 days
     # 12/2/2016 Number of time steps taken chosen to represent eight days.
     #break points will be set at rush hour, end of day 1, start of day 8, rush hour day 
 
@@ -213,10 +215,12 @@ def run():
         if time[1] == 9 and time[2] == 0 and time[3] == 0:
             outFile.write(str(util.stringWaitTimes(timeCount, laneWE, laneEW, laneSN, laneNS)))
             outFile.write('\n')
+            """
             laneWE = 0
             laneEW = 0
             laneSN = 0
             laneNS = 0
+            """
 
         if time[1] >= 17 and time [1] < 19:
             laneWE = ((laneWE * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('1i_0'))/timeCount
@@ -225,13 +229,15 @@ def run():
             laneNS = ((laneNS * (timeCount-1)) +traci.lane.getLastStepMeanSpeed('4i_0'))/timeCount
         
         
-        if time[1] == 9 and time[2] == 0 and time[3] == 0:
+        if time[1] == 19 and time[2] == 0 and time[3] == 0:
             outFile.write(str(util.stringWaitTimes(timeCount, laneWE, laneEW, laneSN, laneNS)))
             outFile.write('\n')
+            """
             laneWE = 0
             laneEW = 0
             laneSN = 0
             laneNS = 0
+            """
         
         """
         #getting a wait time string
